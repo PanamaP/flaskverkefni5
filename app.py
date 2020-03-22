@@ -40,7 +40,37 @@ def telja(id):
         fjoldi = len(karfa)
     return render_template("index.html", vorur=vorur, fjoldi=fjoldi)
 
+@app.route("/karfa")
+def karfa():
+    karfa = []
+    summa = 0
+    if 'karfa' in session:
+        karfa = session['karfa']
+        fjoldi = len(karfa)
+        for i in karfa:
+            summa += int(i[3])
+        return render_template("karfa.tpl", k = karfa, tom = False, fjoldi=fjoldi, samtals=summa)
+    else:
+        return render_template("karfa.tpl", k = karfa, tom = True)
 
+@app.route("/eydavoru/<int:id>")
+def eydavoru(id):
+    karfa = []
+    karfa = session['karfa']
+    vara = 0
+    for i in range(len(karfa)):
+        if karfa[i][0] == id:
+            vara = i
+    karfa.remove(karfa[vara])
+    session['karfa'] = karfa
+    return render_template("eydavoru.tpl")
+    
+@app.route("/eyda")
+def eyda():
+    session.pop('karfa', None)
+    return render_template("eyda.tpl")
+    
+    
 @app.errorhandler(404)
 def pagenotfound(error):
     return render_template('pagenotfound.html'), 404

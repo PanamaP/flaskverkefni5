@@ -7,12 +7,12 @@
 <h1>Vörulistinn</h1>
 <div class="wrapper">
     {% for vara in vorur %}
-    <div class="vara">
+    <div class="varan">
         <h2>{{ vara[1] }}</h2>
         <img src="/static/images/{{vara[2] }}">
         <h3>Verð: <a href="/add/{{ vara[0] }}">{{ vara[3] }}</a></h3>
-    {% endfor %}
     </div>
+    {% endfor %}
 </div>
 
 
