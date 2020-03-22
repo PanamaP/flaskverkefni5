@@ -4,7 +4,7 @@
     Vefverslun - innkaupakarfan
 {% endblock %}
 
-{% block container %}
+{% block content %}
     <div>
     {% if tom %}
         <h1> Karfan er tóm </h1>
@@ -23,7 +23,7 @@
             </tr>
         {% for i in k %}
             <tr>
-                <td><a href="/eydavoru{{ i[0] }}">{{ i[1] }}</a> </td>
+                <td><a href="/eydavoru/{{ i[0] }}">{{ i[1] }}</a> </td>
                 <td><b> {{ i[3] }} </b></td>
             </tr>
         {% endfor %}

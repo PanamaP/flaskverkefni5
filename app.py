@@ -40,7 +40,7 @@ def telja(id):
         fjoldi = len(karfa)
     return render_template("index.html", vorur=vorur, fjoldi=fjoldi)
 
-@app.route("/karfa")
+@app.route('/karfa')
 def karfa():
     karfa = []
     summa = 0
@@ -63,17 +63,36 @@ def eydavoru(id):
             vara = i
     karfa.remove(karfa[vara])
     session['karfa'] = karfa
-    return render_template("eydavoru.tpl")
+    return render_template("eydavoru.html")
     
 @app.route("/eyda")
 def eyda():
     session.pop('karfa', None)
-    return render_template("eyda.tpl")
+    return render_template("eyda.html")
+
+@app.route('/result', methods= ['POST'])
+def result():
+    if request.method == 'POST':
+        kwargs = {
+            'name': request.form['nafn'],
+            'email': request.form['email'],
+            'phone': request.form['simi'],
+            'price': request.form['samtals']
+        }
+        return render_template('result.tpl', **kwargs)
     
+@app.route('/logout')
+def logout():
+    session.pop('karfa', None)
+    
+    return redirect(url_for('index'))
     
 @app.errorhandler(404)
 def pagenotfound(error):
     return render_template('pagenotfound.html'), 404
 
+@app.errorhandler(405)
+def method_not_allowed(error):
+    return render_template('method_not_allowed.tpl'), 405
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=False)
